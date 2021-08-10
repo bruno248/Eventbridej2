@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
+  
 
   def index
     @events = Event.all
@@ -12,13 +13,12 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
   end
-
  
   def create
-     @event = Event.new(title: params[:title],
-      description: params[:description],
-      user_id: session[:user_id].to_i)
-    if @event.save
+    
+     @event = Event.new(params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location, :administrator_id))
+     #@event.administrator_id = current_user.id    
+     if @event.save
       redirect_to event_path(@event), notice: "Evènement créé"
     else
       render :new
@@ -30,6 +30,7 @@ class EventsController < ApplicationController
   end
 
   def update
+  only_user?(current_user)
   @event = Event.find(params[:id])
   if @event.update(params.permit(:title, :description, :user_id))
     redirect_to event_path(@event), notice: "Evenement mis à jour"
@@ -39,7 +40,8 @@ class EventsController < ApplicationController
   end
 
   def destroy
-  @event = Event.find(params[:id])
+  only_user?(current_user)
+  @events = Event.find(params[:id])
   @event.destroy
   redirect_to root, notice: "Evenement détruit"
   end

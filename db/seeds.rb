@@ -10,7 +10,7 @@ require 'faker'
 
 20.times do |i|
   User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, 
-  description: Faker::Lorem.paragraph(sentence_count: 3), email: "lebgdethp#{i+1}@yopmail.com")
+  description: Faker::Lorem.paragraph(sentence_count: 3), email: "bruno")
 end
 
 
@@ -27,5 +27,3 @@ end
 puts " Seed done !"
 
 
-Event.create(start_date:'2021-08-24', duration:30, title: "HARRY", description: "efaefeafeaf",
-  price: 200, location: "HARRY", administrator_id: 1)
