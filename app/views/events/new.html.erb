@@ -1,0 +1,38 @@
+<%= form_with url: new_event_path do |form| %>
+  <div class="form-group">
+  <div class="field">
+    <%= form.label :Titre %>
+    <%= form.text_field :title, placeholder:"texte", class:"form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Description %>
+    <%= form.text_area :description, size:"50x2", class:"form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Date_de_début %>
+    <%= form.datetime_local_field :start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Durée %>
+    <%= form.number_field :duration, in:5..60, step:5, class:"form-control"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :Lieu %>
+    <%= form.text_field :location, class:"form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Prix %>
+    <%= form.number_field :price, in:1..1000, step:1, class:"form-control" %>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+
+<%end%>
+
+  </div>
+</form>
