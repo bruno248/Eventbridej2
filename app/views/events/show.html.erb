@@ -3,15 +3,23 @@
 <p class="m5 p3 xshadow border border-light"> la localisation est à <%= @event.location %></p>
 <p class="m5 p3 xshadow border border-light"> le prix est <%= @event.price %></p>
 <p><em class='text-grey'> le mail de l'organisateur est <%= @event.administrator.email %> </em></p>
-<%# <p><em class='text-grey'> le nombre de participant est <%= @event.attendances.participants.count %> </em></p> %>
+<p><em class='text-grey'> le nombre de participant est <%= @num_participant %> </em></p>
+
+ <div>
+ <%= @event.participants.each do |participant| %>
+    <p> l'email des participants est : <%= participant.email %> </h5> 
+    <p> le nom des participants est: <%= participant.first_name %> </h5> </p>
+    </div>
+    <% end %>
 
 
-<%# <button class="btn btn-secondary"><%= link_to "Cliquez ici pour voir les autres évènements de l'organisateur",  %></button> %> %>
 
-
-    <% if @event.administrator == current_user %>
-( <em><%= link_to "Modifier", edit_event_path %> )</em></p>
-
-( <em><%= link_to "destroy", @event.destroy %> )</em></p>
-    
-    <%end %>
+<% if current_user.id == @event.administrator.id %>
+  <%= link_to 'Modifier', edit_event_path(@event), class: "btn btn-primary" %>
+  <%# <%= link_to 'Invités', participations_path(id: @event.id), class: "mt-3 btn btn-primary" %> %>
+<% else %>
+  <% unless already_subscribed?(@event) %>
+    <%= link_to "S'inscrire et payer" , new_event_order_path(@event.id), class: "btn btn-primary mb-3"%>
+  <% end %>
+<% end %>
+  <p> <%= link_to 'Retour', events_path, class: "btn btn-secondary mb-3"%> </p>

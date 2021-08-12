@@ -62,3 +62,6 @@ gem 'dotenv-rails'
 gem 'faker'
 
 gem 'devise' 
+
+gem 'stripe'
+gem 'table_print' 

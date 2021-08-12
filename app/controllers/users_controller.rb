@@ -6,6 +6,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  # def edit
+  # end
+
+  # def update
+  #   if @user.update(user_params)
+  #     redirect_to @user, notice: "Vos informations ont bien été mises à jour."
+  #   else
+  #     render :edit
+  #   end
 
 end
 

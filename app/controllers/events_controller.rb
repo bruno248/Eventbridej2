@@ -8,6 +8,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @num_participant = Attendance.where(event_id: params[:id]).count
+    @name_participant = Attendance.where(event_id: params[:id])
   end
 
   def new
@@ -15,7 +17,6 @@ class EventsController < ApplicationController
   end
  
   def create
-    
      @event = Event.new(params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location, :administrator_id))
      #@event.administrator_id = current_user.id    
      if @event.save
@@ -32,7 +33,7 @@ class EventsController < ApplicationController
   def update
   only_user?(current_user)
   @event = Event.find(params[:id])
-  if @event.update(params.permit(:title, :description, :user_id))
+  if @event.update(params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location, :administrator_id))
     redirect_to event_path(@event), notice: "Evenement mis à jour"
   else
     render :edit
@@ -41,7 +42,6 @@ class EventsController < ApplicationController
 
   def destroy
   only_user?(current_user)
-  @events = Event.find(params[:id])
   @event.destroy
   redirect_to root, notice: "Evenement détruit"
   end
